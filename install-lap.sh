@@ -23,7 +23,7 @@ yum install -y php php-xml php-pdo php-process php-gd php-pecl-igbinary php-mbst
 #rpm -ivh chef-12.8.1-1.el7.x86_64.rpm
 
 #Turn off SELinux
-setenforce 0
+#setenforce 0
 
 #Install CLI prerequisites
 #yum install -y nodejs npm
