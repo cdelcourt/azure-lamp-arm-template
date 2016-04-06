@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "LAMP on CentOS",
+  "description": "This template deploys a Lap(linux+apache2+php5) node and a configurable number of Mysql(mysql server 5.5) nodes on CentOS VMs",
+  "summary": "This template deploys a LAP+MySQL Node on CentOS",
+  "githubUsername": "cdelcourt",
+  "dateUpdated": "2016-04-06"
+}
