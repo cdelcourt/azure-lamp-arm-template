@@ -223,7 +223,7 @@
             "value": "[variables('namespace')]"
           },
           "vmbasename": {
-            "value": "[concat('Mysql', copyindex())]"
+            "value": "[concat('db', copyindex())]"
           },
           "lapNode": {
             "value": "[variables('networkSettings').statics.lapip]"

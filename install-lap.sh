@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#yum upgrade -y
+yum update -y --exclude=WALinuxAgent
 
 #no password prompt while installing mysql server
 #export DEBIAN_FRONTEND=noninteractive
