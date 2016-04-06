@@ -74,9 +74,9 @@
   "variables": {
     "templateBaseUrl": "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/",
     "sharedTemplateUrl": "[concat(variables('templateBaseUrl'), 'shared-resources.json')]",
-    "lampLapTemplateUrl": "[concat(variables('templateBaseUrl'), 'lamplap-resources.json')]",
-    "lampMysqlTemplateUrl": "[concat(variables('templateBaseUrl'), 'lampmysql-resources.json')]",
-    "namespace": "lamp-",
+    "webTemplateUrl": "[concat(variables('templateBaseUrl'), 'web-resources.json')]",
+    "dbTemplateUrl": "[concat(variables('templateBaseUrl'), 'db-resources.json')]",
+    "namespace": "staging-",
 	"apiVersion": "2015-01-01",
     "networkSettings": {
       "virtualNetworkName": "[parameters('virtualNetworkName')]",
@@ -93,7 +93,7 @@
           "base": "10.0.0.",
           "start": 5
         },
-        "lapip": "10.0.0.240",
+        "lapip": "10.0.0.200",
 		"mysqlip": "10.0.0.10"
       }
     },
@@ -142,7 +142,7 @@
       }
     },
     {
-      "name": "lampLapNode",
+      "name": "webNode",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('apiVersion')]",
       "dependsOn": [
@@ -151,7 +151,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('lampLapTemplateUrl')]",
+          "uri": "[variables('webTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -168,7 +168,7 @@
             "value": "[variables('namespace')]"
           },
           "vmbasename": {
-            "value": "Lap"
+            "value": "web"
           },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
@@ -192,12 +192,12 @@
       }
     },
     {
-      "name": "[concat('lampMysqlNode', copyindex())]",
+      "name": "[concat('dbNode', copyindex())]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('apiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Resources/deployments/', 'shared')]",
-        "[concat('Microsoft.Resources/deployments/', 'lampLapNode')]"
+        "[concat('Microsoft.Resources/deployments/', 'webNode')]"
       ],
       "copy": {
         "name": "vmLoop",
@@ -206,7 +206,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('lampMysqlTemplateUrl')]",
+          "uri": "[variables('dbTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
