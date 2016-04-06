@@ -7,7 +7,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 #install mysql server and azure-cli prerequisites
 #yum install -y epel-release
-yum install -y mysql-community-server nodejs npm fail2ban
+yum install -y mysql-community-server nodejs npm fail2ban --exclude=WALinuxAgent
 
 #Install Azure CLI
 npm install -g azure-cli
