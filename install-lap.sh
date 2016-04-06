@@ -6,8 +6,8 @@ yum upgrade -y
 export DEBIAN_FRONTEND=noninteractive
 
 #Install Apache and associated packages
-yum install -y epel-release
-yum install -y httpd  mod_ssl fail2ban samba-client samba-common cifs-utils
+#yum install -y epel-release ##Commented out because of potential issues between repos
+yum install -y httpd mod_ssl fail2ban samba-client samba-common cifs-utils net-tools
 
 #Install PHP and miscellaneous PHP modules
 yum install -y php php-xml php-pdo php-process php-gd php-pecl-igbinary php-mbstring php-mcrypt php-mysqlnd php-pecl-redis php-xmlrpc php-tidy
