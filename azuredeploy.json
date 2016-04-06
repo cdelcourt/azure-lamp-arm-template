@@ -228,9 +228,9 @@
           "lapNode": {
             "value": "[variables('networkSettings').statics.lapip]"
           },
-		  "mysqlstaticIp": {
+		      "mysqlstaticIp": {
             "value": "[variables('networkSettings').statics.mysqlip]"
-		  },
+		      },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
           },
