@@ -26,7 +26,7 @@
     "dnsname": {
       "type": "string"
     },
-    "mysqlNodes": {
+    "dbNodes": {
       "type": "int"
     },
     "subnet": {

@@ -33,7 +33,7 @@
         "description": "DNS Name for the publicly accessible Lap node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
       }
     },
-    "lapVmSize": {
+    "webVmSize": {
       "type": "string",
       "defaultValue": "Standard_A1",
       "allowedValues": [
@@ -48,14 +48,14 @@
         "description": "The size of the virtual machines used when provisioning the Lap node"
       }
     },
-    "mysqlNodes": {
+    "dbNodes": {
       "type": "int",
       "defaultValue": 1,
       "metadata": {
         "description": "Number of Mysql node (1 is the default)"
       }
     },
-    "mysqlVmSize": {
+    "dbVmSize": {
       "type": "string",
       "defaultValue": "Standard_A1",
       "allowedValues": [
@@ -93,8 +93,8 @@
           "base": "10.0.0.",
           "start": 5
         },
-        "lapip": "10.0.0.200",
-		"mysqlip": "10.0.0.10"
+        "webip": "10.0.0.200",
+        "dbip": "10.0.0.10"
       }
     },
     "lapOsSettings": {
@@ -108,7 +108,7 @@
         "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-lap.sh"
       ]
     },
-    "mysqlOsSettings": {
+    "dbOsSettings": {
       "imageReference": {
         "publisher": "OpenLogic",
         "offer": "CentOS",
@@ -177,13 +177,13 @@
             "value": "[parameters('dnsNamePrefix')]"
           },
           "staticIp": {
-            "value": "[variables('networkSettings').statics.lapip]"
+            "value": "[variables('networkSettings').statics.webip]"
           },
           "vmSize": {
-            "value": "[parameters('lapVmSize')]"
+            "value": "[parameters('webVmSize')]"
           },
-          "mysqlNodes": {
-            "value": "[parameters('mysqlNodes')]"
+          "dbNodes": {
+            "value": "[parameters('dbNodes')]"
           },
           "osSettings": {
             "value": "[variables('lapOsSettings')]"
@@ -201,7 +201,7 @@
       ],
       "copy": {
         "name": "vmLoop",
-        "count": "[parameters('mysqlNodes')]"
+        "count": "[parameters('dbNodes')]"
       },
       "properties": {
         "mode": "Incremental",
@@ -225,20 +225,20 @@
           "vmbasename": {
             "value": "[concat('db', copyindex())]"
           },
-          "lapNode": {
-            "value": "[variables('networkSettings').statics.lapip]"
+          "webNode": {
+            "value": "[variables('networkSettings').statics.webip]"
           },
-		      "mysqlstaticIp": {
-            "value": "[variables('networkSettings').statics.mysqlip]"
+		      "dbstaticIp": {
+            "value": "[variables('networkSettings').statics.dbip]"
 		      },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
           },
           "vmSize": {
-            "value": "[parameters('mysqlVmSize')]"
+            "value": "[parameters('dbVmSize')]"
           },
           "osSettings": {
-            "value": "[variables('mysqlOsSettings')]"
+            "value": "[variables('dbOsSettings')]"
           }
         }
       }

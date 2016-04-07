@@ -17,13 +17,13 @@
     "dnsNamePrefix": {
       "value": "GEN-UNIQUE"
     },
-    "lapVmSize": {
+    "webVmSize": {
       "value": "Standard_A1"
     },
-    "mysqlNodes": {
+    "dbNodes": {
       "value": 1
     },
-    "mysqlVmSize": {
+    "dbVmSize": {
       "value": "Standard_A1"
     }
   }
