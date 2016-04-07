@@ -12,6 +12,10 @@ yum install -y httpd mod_ssl fail2ban samba-client samba-common cifs-utils net-t
 #Install PHP and miscellaneous PHP modules
 yum install -y php php-xml php-pdo php-process php-gd php-pecl-igbinary php-mbstring php-mcrypt php-mysqlnd php-pecl-redis php-xmlrpc php-tidy --exclude=WALinuxAgent
 
+
+#systemctl start httpd.service
+systemctl start fail2ban.service
+
 #Newrelic PHP repo
 #yum install -y newrelic-repo
 
@@ -24,9 +28,3 @@ yum install -y php php-xml php-pdo php-process php-gd php-pecl-igbinary php-mbst
 
 #Turn off SELinux
 #setenforce 0
-
-#Install CLI prerequisites
-#yum install -y nodejs npm
-
-#Install Azure CLI - REMOVED for now while testing as it takes a long time to install
-#npm install -g azure-cli

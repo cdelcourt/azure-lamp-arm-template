@@ -37,9 +37,9 @@
       "type": "string",
       "defaultValue": "Standard_A1",
       "allowedValues": [
-	    "Standard_A1",
-		  "Standard_A2",
-	    "Standard_A3",
+      "Standard_A1",
+      "Standard_A2",
+      "Standard_A3",
       "Standard_D1",
       "Standard_D3",
       "Standard_D4"
@@ -59,9 +59,9 @@
       "type": "string",
       "defaultValue": "Standard_A1",
       "allowedValues": [
-	    "Standard_A1",
-		  "Standard_A2",
-		  "Standard_A3",
+      "Standard_A1",
+      "Standard_A2",
+      "Standard_A3",
       "Standard_D1",
       "Standard_D3",
       "Standard_D4"
