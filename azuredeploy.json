@@ -4,6 +4,7 @@
   "parameters": {
     "region": {
       "type": "string",
+      "defaultValue": "Australia East",
       "metadata": {
         "description": "Location where resources will be provisioned"
       }
@@ -45,7 +46,7 @@
       "Standard_D4"
       ],
       "metadata": {
-        "description": "The size of the virtual machines used when provisioning the Lap node"
+        "description": "The size of the virtual machines used when provisioning the Web node"
       }
     },
     "nasNodes": {
@@ -67,7 +68,7 @@
       "Standard_D4"
       ],
       "metadata": {
-        "description": "The size of the virtual machines used when provisioning the NFS Server node"
+        "description": "The size of the virtual machines used when provisioning the NFS Server node(s)"
       }
     },
     "natNodes": {
@@ -82,17 +83,17 @@
       "defaultValue": "Standard_A0",
       "allowedValues": [
       "Standard_A0",
-      "Standard_A1",
+      "Standard_A1"
       ],
       "metadata": {
-        "description": "The size of the virtual machines used when provisioning the NAT node"
+        "description": "The size of the virtual machines used when provisioning the NAT node(s)"
       }
     },
     "dbNodes": {
       "type": "int",
       "defaultValue": 1,
       "metadata": {
-        "description": "Number of Mysql node (1 is the default)"
+        "description": "Number of MySQL nodes (1 is the default)"
       }
     },
     "dbVmSize": {
@@ -107,7 +108,7 @@
       "Standard_D4"
       ],
       "metadata": {
-        "description": "The size of the virtual machines used when provisioning Mysql node(s)"
+        "description": "The size of the virtual machines used when provisioning MySQL node(s)"
       }
     }
   },

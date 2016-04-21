@@ -22,7 +22,7 @@
         "description": "Address Prefix"
       }
     },
-    "lapNode": {
+    "webNode": {
       "type": "string"
     },
     "subnetPrefix": {
