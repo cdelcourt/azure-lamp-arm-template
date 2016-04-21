@@ -16,7 +16,7 @@
     }
   },
   "variables": {
-    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storageaccount')]",
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
 	"apiVersion": "2015-06-15"
 
   },
