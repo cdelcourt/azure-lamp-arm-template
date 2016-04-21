@@ -26,6 +26,9 @@
     "webVmSize": {
       "value": "Standard_A1"
     },
+    "webNodes": {
+      "value": 1
+    },
     "dbNodes": {
       "value": 1
     },
