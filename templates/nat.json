@@ -26,9 +26,6 @@
     "dnsname": {
       "type": "string"
     },
-    "dbNodes": {
-      "type": "int"
-    },
     "subnet": {
       "type": "object"
     },
@@ -167,7 +164,7 @@
         "settings": {
 		  "autoUpgradeMinorVersion": true,
           "fileUris": "[parameters('osSettings').scripts]",
-          "commandToExecute": "[concat('bash install-nat.sh', '10.0.0.10')]"
+          "commandToExecute": "bash install-nat.sh"
         }
       }
     }

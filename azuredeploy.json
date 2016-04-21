@@ -31,7 +31,7 @@
     "dnsNamePrefix": {
       "type": "string",
       "metadata": {
-        "description": "DNS Name for the publicly accessible Lap node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
+        "description": "DNS Name for the publicly accessible web node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
       }
     },
     "webVmSize": {
@@ -143,7 +143,7 @@
         "dbip": "10.0.0.7"
       }
     },
-    "lapOsSettings": {
+    "webOsSettings": {
       "imageReference": {
         "publisher": "OpenLogic",
         "offer": "CentOS",
@@ -151,7 +151,7 @@
         "version": "latest"
       },
       "scripts": [
-        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-lap.sh"
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-web.sh"
       ]
     },
     "natOsSettings": {
@@ -254,7 +254,7 @@
             "value": "[parameters('dbNodes')]"
           },
           "osSettings": {
-            "value": "[variables('lapOsSettings')]"
+            "value": "[variables('webOsSettings')]"
           }
         }
       }
@@ -273,7 +273,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('webTemplateUrl')]",
+          "uri": "[variables('nasTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -305,7 +305,7 @@
             "value": "[parameters('nasVmSize')]"
           },
           "osSettings": {
-            "value": "[variables('lapOsSettings')]"
+            "value": "[variables('nasOsSettings')]"
           }
         }
       }
@@ -324,7 +324,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('webTemplateUrl')]",
+          "uri": "[variables('natTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -356,7 +356,7 @@
             "value": "[parameters('natVmSize')]"
           },
           "osSettings": {
-            "value": "[variables('lapOsSettings')]"
+            "value": "[variables('natOsSettings')]"
           }
         }
       }
