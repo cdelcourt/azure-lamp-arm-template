@@ -14,8 +14,8 @@ yum update -y  --exclude=WALinuxAgent
 
 yum install -y mysql-server nodejs npm fail2ban --exclude=WALinuxAgent
 
-systemctl start mysqld.service
-systemctl start fail2ban.service
+systemctl enable mysqld.service && systemctl start mysqld.service
+systemctl enable fail2ban.service && systemctl start fail2ban.service
 
 #Install Azure CLI
 #npm install -g azure-cli
