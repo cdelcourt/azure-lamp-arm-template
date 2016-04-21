@@ -12,15 +12,27 @@
       "value": "GEN-PASSWORD"
     },
     "region": {
-      "value": "West US"
+      "value": "Australia East"
     },
     "dnsNamePrefix": {
       "value": "GEN-UNIQUE"
+    },
+    "dnsNameforLBIP": {
+      "value": "GEN-UNIQUE"
+    },
+    "publicIPAddressType": {
+      "value": "Dynamic"
     },
     "webVmSize": {
       "value": "Standard_A1"
     },
     "dbNodes": {
+      "value": 1
+    },
+    "natNodes": {
+      "value": 1
+    },
+    "nasNodes": {
       "value": 1
     },
     "dbVmSize": {

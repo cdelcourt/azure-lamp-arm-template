@@ -48,6 +48,46 @@
         "description": "The size of the virtual machines used when provisioning the Lap node"
       }
     },
+    "nasNodes": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Number of NFS Server nodes (1 is the default)"
+      }
+    },
+    "nasVmSize": {
+      "type": "string",
+      "defaultValue": "Standard_A1",
+      "allowedValues": [
+      "Standard_A1",
+      "Standard_A2",
+      "Standard_A3",
+      "Standard_D1",
+      "Standard_D3",
+      "Standard_D4"
+      ],
+      "metadata": {
+        "description": "The size of the virtual machines used when provisioning the NFS Server node"
+      }
+    },
+    "natNodes": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Number of NAT nodes (1 is the default)"
+      }
+    },
+    "natVmSize": {
+      "type": "string",
+      "defaultValue": "Standard_A0",
+      "allowedValues": [
+      "Standard_A0",
+      "Standard_A1",
+      ],
+      "metadata": {
+        "description": "The size of the virtual machines used when provisioning the NAT node"
+      }
+    },
     "dbNodes": {
       "type": "int",
       "defaultValue": 1,
@@ -73,9 +113,12 @@
   },
   "variables": {
     "templateBaseUrl": "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/",
-    "sharedTemplateUrl": "[concat(variables('templateBaseUrl'), 'shared-resources.json')]",
-    "webTemplateUrl": "[concat(variables('templateBaseUrl'), 'web-resources.json')]",
-    "dbTemplateUrl": "[concat(variables('templateBaseUrl'), 'db-resources.json')]",
+    "sharedTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/shared.json')]",
+    "webTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/web.json')]",
+    "dbTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/db.json')]",
+    "nasTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nas.json')]",
+    "natTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nat.json')]",
+    "weblbTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/web-lb.json')]",
     "namespace": "staging-",
 	"apiVersion": "2015-01-01",
     "networkSettings": {
@@ -94,7 +137,9 @@
           "start": 5
         },
         "webip": "10.0.0.200",
-        "dbip": "10.0.0.10"
+        "nasip": "10.0.0.100",
+        "natip": "10.0.0.50",
+        "dbip": "10.0.0.7"
       }
     },
     "lapOsSettings": {
@@ -106,6 +151,28 @@
       },
       "scripts": [
         "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-lap.sh"
+      ]
+    },
+    "natOsSettings": {
+      "imageReference": {
+        "publisher": "OpenLogic",
+        "offer": "CentOS",
+        "sku": "7.1",
+        "version": "latest"
+      },
+      "scripts": [
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-nat.sh"
+      ]
+    },
+    "nasOsSettings": {
+      "imageReference": {
+        "publisher": "OpenLogic",
+        "offer": "CentOS",
+        "sku": "7.1",
+        "version": "latest"
+      },
+      "scripts": [
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-nas.sh"
       ]
     },
     "dbOsSettings": {
@@ -184,6 +251,108 @@
           },
           "dbNodes": {
             "value": "[parameters('dbNodes')]"
+          },
+          "osSettings": {
+            "value": "[variables('lapOsSettings')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "nasNode",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('apiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'shared')]"
+      ],
+      "copy": {
+        "name": "vmLoop",
+        "count": "[parameters('nasNodes')]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('webTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "region": {
+            "value": "[parameters('region')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "namespace": {
+            "value": "[variables('namespace')]"
+          },
+          "vmbasename": {
+            "value": "nas"
+          },
+          "subnet": {
+            "value": "[variables('networkSettings').subnet.dse]"
+          },
+          "dnsname": {
+            "value": "[parameters('dnsNamePrefix')]"
+          },
+          "staticIp": {
+            "value": "[variables('networkSettings').statics.nasip]"
+          },
+          "vmSize": {
+            "value": "[parameters('nasVmSize')]"
+          },
+          "osSettings": {
+            "value": "[variables('lapOsSettings')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "natNode",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('apiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'shared')]"
+      ],
+      "copy": {
+        "name": "vmLoop",
+        "count": "[parameters('natNodes')]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('webTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "region": {
+            "value": "[parameters('region')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "namespace": {
+            "value": "[variables('namespace')]"
+          },
+          "vmbasename": {
+            "value": "nat"
+          },
+          "subnet": {
+            "value": "[variables('networkSettings').subnet.dse]"
+          },
+          "dnsname": {
+            "value": "[parameters('dnsNamePrefix')]"
+          },
+          "staticIp": {
+            "value": "[variables('networkSettings').statics.natip]"
+          },
+          "vmSize": {
+            "value": "[parameters('natVmSize')]"
           },
           "osSettings": {
             "value": "[variables('lapOsSettings')]"
