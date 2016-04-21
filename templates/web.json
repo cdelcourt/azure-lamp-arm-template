@@ -93,9 +93,6 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic'))]",
       "location": "[parameters('region')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('namespace'), parameters('vmbasename'), 'PublicIp')]"
-      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -166,7 +163,7 @@
         "settings": {
 		  "autoUpgradeMinorVersion": true,
           "fileUris": "[parameters('osSettings').scripts]",
-          "commandToExecute": "[concat('bash install-lap.sh ', '10.0.0.10')]"
+          "commandToExecute": "[concat('bash install-web.sh ', '10.0.0.10')]"
         }
       }
     }
