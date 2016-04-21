@@ -151,7 +151,7 @@
         "version": "latest"
       },
       "scripts": [
-        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-web.sh"
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/scripts/install-web.sh"
       ]
     },
     "natOsSettings": {
@@ -162,7 +162,7 @@
         "version": "latest"
       },
       "scripts": [
-        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-nat.sh"
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/scripts/install-nat.sh"
       ]
     },
     "nasOsSettings": {
@@ -173,7 +173,7 @@
         "version": "latest"
       },
       "scripts": [
-        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-nas.sh"
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/scripts/install-nas.sh"
       ]
     },
     "dbOsSettings": {
@@ -184,7 +184,7 @@
         "version": "latest"
       },
       "scripts": [
-        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/install-mysql.sh"
+        "https://raw.githubusercontent.com/cdelcourt/azure-lamp-arm-template/master/scripts/install-mysql.sh"
       ]
     }
   },
@@ -236,7 +236,7 @@
             "value": "[variables('namespace')]"
           },
           "vmbasename": {
-            "value": "web"
+            "value": "[concat('web', copyindex())]"
           },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
@@ -290,7 +290,7 @@
             "value": "[variables('namespace')]"
           },
           "vmbasename": {
-            "value": "nas"
+            "value": "[concat('nas', copyindex())]"
           },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
@@ -341,7 +341,7 @@
             "value": "[variables('namespace')]"
           },
           "vmbasename": {
-            "value": "nat"
+            "value": "[concat('nat', copyindex())]"
           },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
