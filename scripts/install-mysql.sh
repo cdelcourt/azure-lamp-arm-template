@@ -18,4 +18,4 @@ systemctl start mysqld.service
 systemctl start fail2ban.service
 
 #Install Azure CLI
-npm install -g azure-cli
+#npm install -g azure-cli
