@@ -35,19 +35,9 @@
     "staticIp": {
       "type": "string"
     },
-
-    "dnsNameforLBIP": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique DNS name"
-      }
-    },
     "addressPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/16",
-      "metadata": {
-        "description": "Address Prefix"
-      }
     },
     "webNode": {
       "type": "string"
@@ -62,10 +52,6 @@
       "metadata": {
         "description": "Public IP type"
       }
-    },
-    "dnsNameForPublicIP": {
-      "name": "dnsNameForPublicIP",
-      "type": "string"
     }
   },
   "variables": {
@@ -242,7 +228,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'lbip')]",
       "location": "[parameters('region')]",
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
