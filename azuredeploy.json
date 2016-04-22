@@ -134,7 +134,6 @@
     "dbTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/db.json')]",
     "nasTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nas.json')]",
     "natTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nat.json')]",
-    "weblbTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/web-lb.json')]",
     "namespace": "staging-",
 	"apiVersion": "2015-01-01",
     "networkSettings": {

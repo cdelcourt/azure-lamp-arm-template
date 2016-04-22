@@ -176,7 +176,7 @@
     },
     {
       "apiVersion": "[variables('apiVersion')]",
-      "name": "[variables('lbName')]",
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'lb')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('region')]",
       "dependsOn": [
