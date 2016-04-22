@@ -180,7 +180,7 @@
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('region')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip')))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip')))]"
       ],
       "properties": {
         "frontendIPConfigurations": [
