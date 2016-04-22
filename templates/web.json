@@ -26,6 +26,9 @@
     "dnsname": {
       "type": "string"
     },
+    "dbNodes": {
+      "type": "int"
+    },
     "subnet": {
       "type": "object"
     },

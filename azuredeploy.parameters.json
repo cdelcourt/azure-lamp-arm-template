@@ -21,9 +21,12 @@
       "value": "GEN-UNIQUE"
     },
     "publicIPAddressType": {
-      "value": "Dynamic"
+      "value": "Static"
     },
     "webVmSize": {
+      "value": "Standard_A1"
+    },
+    "dbVmSize": {
       "value": "Standard_A1"
     },
     "webNodes": {
@@ -37,9 +40,6 @@
     },
     "nasNodes": {
       "value": 1
-    },
-    "dbVmSize": {
-      "value": "Standard_A1"
     }
   }
 }
