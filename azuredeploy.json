@@ -117,6 +117,14 @@
       "metadata": {
         "description": "The size of the virtual machines used when provisioning MySQL node(s)"
       }
+    },
+    "publicIPAddressType": {
+      "type": "string",
+      "defaultValue": "Dynamic",
+      "allowedValues": [ "Dynamic", "Static" ],
+      "metadata": {
+        "description": "Dictates whether the Public IP of the LB is static or dynamic"
+      }
     }
   },
   "variables": {
@@ -263,6 +271,9 @@
           },
           "dbNodes": {
             "value": "[parameters('dbNodes')]"
+          },
+          "publicIPAddressType": {
+            "value": "[parameters('publicIPAddressType')]"
           },
           "osSettings": {
             "value": "[variables('webOsSettings')]"
@@ -420,45 +431,6 @@
           },
           "osSettings": {
             "value": "[variables('dbOsSettings')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "webLB",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "[variables('apiVersion')]",
-      "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/', 'shared')]",
-        "[concat('Microsoft.Resources/deployments/', 'webNode')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('weblbTemplateUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "region": {
-            "value": "[parameters('region')]"
-          },
-          "virtualNetworkName": {
-            "value": "[parameters('virtualNetworkName')]"
-          },
-          "vnetID": {
-            "value": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]"
-          },
-          "namespace": {
-            "value": "[variables('namespace')]"
-          },
-          "webNode": {
-            "value": "[variables('networkSettings').statics.webip]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.dse]"
-          },
-          "loadBalancerName": {
-            "value": "[concat(variables('namespace'), '-webLB')]"
           }
         }
       }

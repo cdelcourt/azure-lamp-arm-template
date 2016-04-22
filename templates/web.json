@@ -26,9 +26,6 @@
     "dnsname": {
       "type": "string"
     },
-    "dbNodes": {
-      "type": "int"
-    },
     "subnet": {
       "type": "object"
     },
@@ -40,15 +37,7 @@
       "defaultValue": "10.0.0.0/16",
     },
     "publicIPAddressType": {
-      "type": "string",
-      "defaultValue": "Dynamic",
-      "allowedValues": [
-        "Dynamic",
-        "Static"
-      ],
-      "metadata": {
-        "description": "Public IP type"
-      }
+      "type": "string"
     }
   },
   "variables": {
