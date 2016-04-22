@@ -34,12 +34,44 @@
     },
     "staticIp": {
       "type": "string"
+    },
+
+    "dnsNameforLBIP": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique DNS name"
+      }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "Address Prefix"
+      }
+    },
+    "webNode": {
+      "type": "string"
+    },
+    "publicIPAddressType": {
+      "type": "string",
+      "defaultValue": "Dynamic",
+      "allowedValues": [
+        "Dynamic",
+        "Static"
+      ],
+      "metadata": {
+        "description": "Public IP type"
+      }
+    },
+    "dnsNameForPublicIP": {
+      "name": "dnsNameForPublicIP",
+      "type": "string"
     }
   },
   "variables": {
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
-	"apiVersion": "2015-06-15",
-	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
+	  "apiVersion": "[variables('apiVersion')]",
+	  "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
     "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]"
   },
   "resources": [
@@ -84,7 +116,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), 'set')]",
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -161,9 +193,61 @@
         "type": "CustomScriptForLinux",
         "typeHandlerVersion": "1.4",
         "settings": {
-		  "autoUpgradeMinorVersion": true,
+		      "autoUpgradeMinorVersion": true,
           "fileUris": "[parameters('osSettings').scripts]",
           "commandToExecute": "[concat('bash install-web.sh ', '10.0.0.10')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('lbName')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "location": "[parameters('region')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "LoadBalancerFrontEnd",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[variables('publicIPAddressID')]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "BackendPool1",
+          }
+        ],
+        "inboundNatRules": [
+          {
+            "name": "Web",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('frontEndIPConfigID')]"
+              },
+              "protocol": "tcp",
+              "frontendPort": 80,
+              "backendPort": 80,
+              "enableFloatingIP": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('region')]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(parameters('namespace'), parameters('vmbasename'), 'lb')]"
         }
       }
     }

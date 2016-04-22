@@ -81,7 +81,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), 'set')]",
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
       "location": "[parameters('region')]",
       "properties": {}
     },

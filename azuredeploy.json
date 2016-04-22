@@ -423,6 +423,45 @@
           }
         }
       }
+    },
+    {
+      "name": "webLB",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('apiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'shared')]",
+        "[concat('Microsoft.Resources/deployments/', 'webNode')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('weblbTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "region": {
+            "value": "[parameters('region')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "vnetID": {
+            "value": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]"
+          },
+          "namespace": {
+            "value": "[variables('namespace')]"
+          },
+          "webNode": {
+            "value": "[variables('networkSettings').statics.webip]"
+          },
+          "subnet": {
+            "value": "[variables('networkSettings').subnet.dse]"
+          },
+          "loadBalancerName": {
+            "value": "[concat(variables('namespace'), '-webLB')]"
+          }
+        }
+      }
     }
   ],
   "outputs": {}
