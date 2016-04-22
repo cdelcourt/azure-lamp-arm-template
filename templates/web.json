@@ -47,7 +47,9 @@
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
 	  "apiVersion": "2015-06-15",
 	  "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
-    "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]"
+    "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]",
+    "loadBalancerPublicIP": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip'))]",
+    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('loadBalancerPublicIP'))]"
   },
   "resources": [
     {
@@ -195,7 +197,7 @@
         ],
         "backendAddressPools": [
           {
-            "name": "BackendPool1",
+            "name": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'pool'))]",
           }
         ],
         "inboundNatRules": [
