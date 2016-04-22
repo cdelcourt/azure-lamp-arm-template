@@ -220,7 +220,7 @@
       "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'lbip')]",
       "location": "[parameters('region')]",
       "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
         "dnsSettings": {
           "domainNameLabel": "[concat(parameters('namespace'), parameters('vmbasename'), 'lb')]"
         }
