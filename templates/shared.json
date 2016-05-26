@@ -14,6 +14,12 @@
         "Description": "The type of storage account used for the deployment"
       }
     },
+    "namespace": {
+      "type": "string",
+      "metadata": {
+        "description": "Prefix to specify the environment name (lowercase characters and numbers only)"
+      }
+    },
     "networkSettings": {
       "type": "object",
       "metadata": {

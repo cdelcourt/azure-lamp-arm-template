@@ -263,6 +263,9 @@
           "storageType": {
             "value": "[parameters('storageType')]"
           },
+          "namespace": {
+            "value": "[parameters('namespace')]"
+          },
           "networkSettings": {
             "value": "[variables('networkSettings')]"
           }
