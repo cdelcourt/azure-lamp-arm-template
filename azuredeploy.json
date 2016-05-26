@@ -22,16 +22,23 @@
         "description": "Administrator user name used when provisioning virtual machines"
       }
     },
-    "adminPassword": {
-      "type": "securestring",
+    "sshKeyData": {
+      "type": "string",
       "metadata": {
-        "description": "Administrator password used when provisioning virtual machines"
+        "description": "SSH rsa public key file as a string."
       }
     },
     "dnsNamePrefix": {
       "type": "string",
       "metadata": {
         "description": "DNS Name for the publicly accessible web node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
+      }
+    },
+    "subnetPrefix": {
+      "type": "string",
+      "defaultValue": "0",
+      "metadata": {
+        "description": "Third octet value for the network - enter a value between 0-255"
       }
     },
     "webNodes": {
@@ -48,6 +55,11 @@
       "Standard_A1",
       "Standard_A2",
       "Standard_A3",
+      "Standard_DS1_v2",
+      "Standard_DS2_v2",
+      "Standard_DS3_v2",
+      "Standard_DS4_v2",
+      "Standard_DS11_v2",
       "Standard_D1",
       "Standard_D3",
       "Standard_D4"
@@ -70,6 +82,8 @@
       "Standard_A1",
       "Standard_A2",
       "Standard_A3",
+      "Standard_DS1_v2",
+      "Standard_DS2_v2",
       "Standard_D1",
       "Standard_D3",
       "Standard_D4"
@@ -110,6 +124,11 @@
       "Standard_A1",
       "Standard_A2",
       "Standard_A3",
+      "Standard_DS1_v2",
+      "Standard_DS2_v2",
+      "Standard_DS3_v2",
+      "Standard_DS4_v2",
+      "Standard_DS11_v2",
       "Standard_D1",
       "Standard_D3",
       "Standard_D4"
@@ -138,23 +157,23 @@
 	"apiVersion": "2015-01-01",
     "networkSettings": {
       "virtualNetworkName": "[parameters('virtualNetworkName')]",
-      "addressPrefix": "10.0.0.0/16",
+      "addressPrefix": "[concat('10.0.', variables('subnetPrefix'), '.0/16')]",
       "subnet": {
         "dse": {
           "name": "dse",
-          "prefix": "10.0.0.0/24",
+          "prefix": "[concat('10.0.', variables('subnetPrefix'), '.0/24')]",
           "vnet": "[parameters('virtualNetworkName')]"
         }
       },
       "statics": {
         "clusterRange": {
-          "base": "10.0.0.",
+          "base": "[concat('10.0.', variables('subnetPrefix'), '.')]",
           "start": 5
         },
-        "webip": "10.0.0.200",
-        "nasip": "10.0.0.100",
-        "natip": "10.0.0.50",
-        "dbip": "10.0.0.7"
+        "webip": "[concat('10.0.', variables('subnetPrefix'), '.200')]",
+        "nasip": "[concat('10.0.', variables('subnetPrefix'), '.100')]",
+        "natip": "[concat('10.0.', variables('subnetPrefix'), '.50')]",
+        "dbip": "[concat('10.0.', variables('subnetPrefix'), '.7')]"
       }
     },
     "webOsSettings": {
@@ -247,8 +266,8 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
             "value": "[variables('namespace')]"
@@ -304,8 +323,8 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
             "value": "[variables('namespace')]"
@@ -355,8 +374,8 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
             "value": "[variables('namespace')]"
@@ -407,8 +426,8 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
             "value": "[variables('namespace')]"

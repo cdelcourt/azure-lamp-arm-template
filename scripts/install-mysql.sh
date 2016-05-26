@@ -17,5 +17,5 @@ yum install -y mysql-server nodejs npm fail2ban --exclude=WALinuxAgent
 systemctl enable mysqld.service && systemctl start mysqld.service
 systemctl enable fail2ban.service && systemctl start fail2ban.service
 
-#Install Azure CLI
+#Install Azure CLI - disable currently because of timeouts in ARM template scripts
 #npm install -g azure-cli

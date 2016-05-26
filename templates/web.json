@@ -8,8 +8,8 @@
     "adminUsername": {
       "type": "string"
     },
-    "adminPassword": {
-      "type": "securestring"
+    "sshKeyData": {
+      "type": "string"
     },
     "namespace": {
       "type": "string"
@@ -135,7 +135,7 @@
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
           "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
+          "sshKeyData": "[parameters('sshKeyData')]"
         },
         "storageProfile": {
           "imageReference": "[parameters('osSettings').imageReference]",
