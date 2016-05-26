@@ -150,6 +150,17 @@
         "description": "The size of the virtual machines used when provisioning MySQL node(s)"
       }
     },
+    "storageType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+      "Standard_LRS",
+      "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "The type of storage account used for the deployment"
+      }
+    },
     "publicIPAddressType": {
       "type": "string",
       "defaultValue": "Dynamic",
@@ -248,6 +259,9 @@
         "parameters": {
           "region": {
             "value": "[parameters('region')]"
+          },
+          "storageType": {
+            "value": "[parameters('storageType')]"
           },
           "networkSettings": {
             "value": "[variables('networkSettings')]"
