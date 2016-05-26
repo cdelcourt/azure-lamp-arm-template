@@ -53,7 +53,7 @@
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
     "loadBalancerPublicIP": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip'))]",
     "lbBackendPool": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'pool'))]",
-    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools', 'parameters('lbBackendPool'))]",
+    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/', 'parameters('lbBackendPool'))]",
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('loadBalancerPublicIP'))]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
