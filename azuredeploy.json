@@ -9,6 +9,13 @@
         "description": "Location where resources will be provisioned"
       }
     },
+    "namespace": {
+      "type": "string",
+      "defaultValue": "staging",
+      "metadata": {
+        "description": "Prefix to specify the environment name (lowercase characters and numbers only)"
+      }
+    },
     "virtualNetworkName": {
       "type": "string",
       "defaultValue": "myVNET",
@@ -23,22 +30,15 @@
       }
     },
     "sshKeyData": {
-      "type": "string",
-      "metadata": {
-        "description": "SSH rsa public key file as a string."
-      }
+        "type": "String",
+        "metadata": {
+            "description": "SSH rsa public key file as a string."
+        }
     },
     "dnsNamePrefix": {
       "type": "string",
       "metadata": {
         "description": "DNS Name for the publicly accessible web node. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
-      }
-    },
-    "subnetPrefix": {
-      "type": "string",
-      "defaultValue": "0",
-      "metadata": {
-        "description": "Third octet value for the network - enter a value between 0-255"
       }
     },
     "webNodes": {
@@ -77,8 +77,9 @@
     },
     "nasVmSize": {
       "type": "string",
-      "defaultValue": "Standard_A1",
+      "defaultValue": "Standard_A0",
       "allowedValues": [
+      "Standard_A0",
       "Standard_A1",
       "Standard_A2",
       "Standard_A3",
@@ -153,27 +154,27 @@
     "dbTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/db.json')]",
     "nasTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nas.json')]",
     "natTemplateUrl": "[concat(variables('templateBaseUrl'), 'templates/nat.json')]",
-    "namespace": "staging-",
+    "namespace": "[concat(parameters('namespace'), '-')]",
 	"apiVersion": "2015-01-01",
     "networkSettings": {
       "virtualNetworkName": "[parameters('virtualNetworkName')]",
-      "addressPrefix": "[concat('10.0.', variables('subnetPrefix'), '.0/16')]",
+      "addressPrefix": "10.0.0.0/16",
       "subnet": {
         "dse": {
           "name": "dse",
-          "prefix": "[concat('10.0.', variables('subnetPrefix'), '.0/24')]",
+          "prefix": "10.0.0.0/24",
           "vnet": "[parameters('virtualNetworkName')]"
         }
       },
       "statics": {
         "clusterRange": {
-          "base": "[concat('10.0.', variables('subnetPrefix'), '.')]",
+          "base": "10.0.0.",
           "start": 5
         },
-        "webip": "[concat('10.0.', variables('subnetPrefix'), '.200')]",
-        "nasip": "[concat('10.0.', variables('subnetPrefix'), '.100')]",
-        "natip": "[concat('10.0.', variables('subnetPrefix'), '.50')]",
-        "dbip": "[concat('10.0.', variables('subnetPrefix'), '.7')]"
+        "webip": "10.0.0.200",
+        "nasip": "10.0.0.100",
+        "natip": "10.0.0.50",
+        "dbip": "10.0.0.7"
       }
     },
     "webOsSettings": {

@@ -48,6 +48,7 @@
 	  "apiVersion": "2015-06-15",
 	  "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
     "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]",
+    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "loadBalancerPublicIP": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip'))]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('loadBalancerPublicIP'))]"
   },
@@ -135,7 +136,17 @@
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
           "adminUsername": "[parameters('adminUsername')]",
-          "sshKeyData": "[parameters('sshKeyData')]"
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": "true",
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[variables('sshKeyPath')]",
+                  "keyData": "[parameters('sshKeyData')]"
+                }
+              ]
+            }
+          }
         },
         "storageProfile": {
           "imageReference": "[parameters('osSettings').imageReference]",

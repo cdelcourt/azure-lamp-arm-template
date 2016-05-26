@@ -36,6 +36,7 @@
   "variables": {
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
 	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
+  "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
 	"apiVersion": "2015-06-15"
   },
   "resources": [
@@ -81,7 +82,17 @@
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
           "adminUsername": "[parameters('adminUsername')]",
-          "sshKeyData": "[parameters('sshKeyData')]"
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": "true",
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[variables('sshKeyPath')]",
+                  "keyData": "[parameters('sshKeyData')]"
+                }
+              ]
+            }
+          }
         },
         "storageProfile": {
           "imageReference": "[parameters('osSettings').imageReference]",

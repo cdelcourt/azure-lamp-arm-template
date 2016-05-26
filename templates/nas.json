@@ -35,9 +35,10 @@
   },
   "variables": {
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
-	"apiVersion": "2015-06-15",
-	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
-    "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]"
+	  "apiVersion": "2015-06-15",
+	  "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
+    "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]",
+    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]"
   },
   "resources": [
     {
@@ -123,7 +124,17 @@
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
           "adminUsername": "[parameters('adminUsername')]",
-          "sshKeyData": "[parameters('sshKeyData')]"
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": "true",
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[variables('sshKeyPath')]",
+                  "keyData": "[parameters('sshKeyData')]"
+                }
+              ]
+            }
+          }
         },
         "storageProfile": {
           "imageReference": "[parameters('osSettings').imageReference]",
