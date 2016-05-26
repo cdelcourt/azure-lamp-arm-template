@@ -33,7 +33,7 @@
       "name": "[variables('storageAccountName')]",
       "location": "[parameters('region')]",
       "properties": {
-        "accountType": "parameters('storageType')"
+        "accountType": "[parameters('storageType')]"
       }
     },
     {
