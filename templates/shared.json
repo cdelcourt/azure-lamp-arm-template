@@ -8,6 +8,12 @@
         "Description": "Location where resources will be provisioned"
       }
     },
+    "storageType": {
+      "type": "string",
+      "metadata": {
+        "Description": "The type of storage account used for the deployment"
+      }
+    },
     "networkSettings": {
       "type": "object",
       "metadata": {
