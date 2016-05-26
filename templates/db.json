@@ -35,7 +35,7 @@
   },
   "variables": {
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
-	"storageAccountName": "[concat(uniquestring(resourceGroup().id, deployment().name), 'storage')]",
+	"storageAccountName": "[concat(uniquestring(resourceGroup().id), '-', 'parameters('namespace')', '-storage')]",
   "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
 	"apiVersion": "2015-06-15"
   },
