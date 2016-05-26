@@ -49,8 +49,14 @@
 	  "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'storage')]",
     "securityGroupName": "[concat(parameters('namespace'), parameters('vmbasename'), 'nsg')]",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+    "lbName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lb'))]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
     "loadBalancerPublicIP": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lbip'))]",
-    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('loadBalancerPublicIP'))]"
+    "lbBackendPool": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'pool'))]",
+    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools', 'parameters('lbBackendPool')')]",
+    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
+    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('loadBalancerPublicIP'))]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
   },
   "resources": [
     {
@@ -189,7 +195,7 @@
     },
     {
       "apiVersion": "[variables('apiVersion')]",
-      "name": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lb'))]",
+      "name": "[variables('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('region')]",
       "dependsOn": [
@@ -208,7 +214,7 @@
         ],
         "backendAddressPools": [
           {
-            "name": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'pool'))]",
+            "name": "[variables('lbBackendPool')]",
           }
         ],
         "inboundNatRules": [
@@ -235,7 +241,7 @@
       "properties": {
         "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'lb'))]"
+          "domainNameLabel": "[variables('lbName')]"
         }
       }
     }
