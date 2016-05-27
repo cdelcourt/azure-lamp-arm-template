@@ -13,12 +13,19 @@
       "type": "string",
       "defaultValue": "staging",
       "metadata": {
-        "description": "Prefix to specify the environment name (lowercase characters and numbers only)"
+        "description": "Shortname Environment name"
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "staging",
+      "metadata": {
+        "description": "Full environment name (for tags, etc.)"
       }
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "myVNET",
+      "defaultValue": "staging",
       "metadata": {
         "description": "Name of the virtual network provisioned for the cluster"
       }
@@ -293,6 +300,9 @@
           "region": {
             "value": "[parameters('region')]"
           },
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
@@ -300,7 +310,7 @@
             "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
-            "value": "[variables('namespace')]"
+            "value": "[parameters('namespace')]"
           },
           "vmbasename": {
             "value": "[concat('web', copyindex())]"
@@ -350,6 +360,9 @@
           "region": {
             "value": "[parameters('region')]"
           },
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
@@ -357,7 +370,7 @@
             "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
-            "value": "[variables('namespace')]"
+            "value": "[parameters('namespace')]"
           },
           "vmbasename": {
             "value": "[concat('nas', copyindex())]"
@@ -401,6 +414,9 @@
           "region": {
             "value": "[parameters('region')]"
           },
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
@@ -408,7 +424,7 @@
             "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
-            "value": "[variables('namespace')]"
+            "value": "[parameters('namespace')]"
           },
           "vmbasename": {
             "value": "[concat('nat', copyindex())]"
@@ -453,6 +469,9 @@
           "region": {
             "value": "[parameters('region')]"
           },
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
@@ -460,7 +479,7 @@
             "value": "[parameters('sshKeyData')]"
           },
           "namespace": {
-            "value": "[variables('namespace')]"
+            "value": "[parameters('namespace')]"
           },
           "vmbasename": {
             "value": "[concat('db', copyindex())]"

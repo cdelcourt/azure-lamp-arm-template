@@ -5,6 +5,9 @@
     "region": {
       "type": "string"
     },
+    "environment": {
+      "type": "string"
+    },
     "adminUsername": {
       "type": "string"
     },
@@ -43,7 +46,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
+      "name": "[concat(parameters('namespace'), 'db-set')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -71,6 +74,10 @@
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
+      "tags": {
+                  "role": "db",
+                  "environment": "[parameters('environment')]"
+      },
       "location": "[parameters('region')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', parameters('namespace'), parameters('vmbasename'), 'nic')]"
@@ -78,6 +85,9 @@
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
+        },
+        "availabilitySet": {
+          "id": "[concat(parameters('namespace'), 'db-set')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

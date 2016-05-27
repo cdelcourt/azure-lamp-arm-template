@@ -5,6 +5,9 @@
     "region": {
       "type": "string"
     },
+    "environment": {
+      "type": "string"
+    },
     "adminUsername": {
       "type": "string"
     },
@@ -82,7 +85,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
+      "name": "[concat(parameters('namespace'), 'nas-set')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -113,6 +116,10 @@
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm')]",
+      "tags": {
+                  "role": "nas",
+                  "environment": "[parameters('environment')]"
+      },
       "location": "[parameters('region')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
@@ -120,6 +127,9 @@
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
+        },
+        "availabilitySet": {
+          "id": "[concat(parameters('namespace'), 'nas-set')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

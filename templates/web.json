@@ -5,6 +5,9 @@
     "region": {
       "type": "string"
     },
+    "environment": {
+      "type": "string"
+    },
     "adminUsername": {
       "type": "string"
     },
@@ -132,6 +135,10 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm')]",
       "location": "[parameters('region')]",
+      "tags": {
+                  "role": "web",
+                  "environment": "[parameters('environment')]"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
       ],
