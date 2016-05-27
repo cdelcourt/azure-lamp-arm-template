@@ -82,7 +82,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
+      "name": "[concat(parameters('namespace'), 'admin-set')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -114,7 +114,8 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm')]",
       "tags": {
-                  "role": "admin"
+                  "role": "admin",
+                  "environment": "[parameters('environment')]"
       },
       "location": "[parameters('region')]",
       "dependsOn": [
@@ -123,6 +124,9 @@
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
+        },
+        "availabilitySet": {
+          "id": "[concat(parameters('namespace'), 'admin-set')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
