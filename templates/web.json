@@ -140,7 +140,7 @@
                   "environment": "[parameters('environment')]"
       },
       "dependsOn": [
-        "[concat(parameters('namespace'), 'webSet')]",
+        "[concat('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'webSet'))]",
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
       ],
       "properties": {
@@ -148,7 +148,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[concat(parameters('namespace'), 'webSet')]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'webSet'))]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

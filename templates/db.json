@@ -80,7 +80,7 @@
       },
       "location": "[parameters('region')]",
       "dependsOn": [
-        "[concat(parameters('namespace'), 'dbSet')]",
+        "[concat('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'dbSet'))]",
         "[concat('Microsoft.Network/networkInterfaces/', parameters('namespace'), parameters('vmbasename'), 'nic')]"
       ],
       "properties": {
@@ -88,7 +88,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[concat(parameters('namespace'), 'dbSet')]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'dbSet'))]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

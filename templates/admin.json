@@ -82,7 +82,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), 'admin-set')]",
+      "name": "[concat(parameters('namespace'), 'adminSet')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -119,6 +119,7 @@
       },
       "location": "[parameters('region')]",
       "dependsOn": [
+        "[concat('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'adminSet'))]"
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
       ],
       "properties": {
@@ -126,7 +127,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[concat(parameters('namespace'), 'admin-set')]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets/', concat(parameters('namespace'), 'adminSet'))]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
