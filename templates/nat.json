@@ -83,7 +83,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), 'nat-set')]",
+      "name": "[concat(parameters('namespace'), 'natSet')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -133,7 +133,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[concat(parameters('namespace'), 'nat-set')]"
+          "id": "[concat(parameters('namespace'), 'natSet')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

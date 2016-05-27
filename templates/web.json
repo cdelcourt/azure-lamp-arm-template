@@ -103,7 +103,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'set')]",
+      "name": "[concat(parameters('namespace'), 'webSet')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -145,6 +145,9 @@
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
+        },
+        "availabilitySet": {
+          "id": "[concat(parameters('namespace'), 'webSet')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",
