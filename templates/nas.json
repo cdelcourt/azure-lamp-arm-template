@@ -85,7 +85,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat(parameters('namespace'), 'nasset')]",
+      "name": "[concat(parameters('namespace'), 'nasSet')]",
       "location": "[parameters('region')]",
       "properties": {}
     },
@@ -122,6 +122,7 @@
       },
       "location": "[parameters('region')]",
       "dependsOn": [
+        "[concat(parameters('namespace'), 'nasSet')]",
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
       ],
       "properties": {
@@ -129,7 +130,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[concat(parameters('namespace'), 'nasset')]"
+          "id": "[concat(parameters('namespace'), 'nasSet')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'vm'))]",

@@ -80,6 +80,7 @@
       },
       "location": "[parameters('region')]",
       "dependsOn": [
+        "[concat(parameters('namespace'), 'dbSet')]",
         "[concat('Microsoft.Network/networkInterfaces/', parameters('namespace'), parameters('vmbasename'), 'nic')]"
       ],
       "properties": {

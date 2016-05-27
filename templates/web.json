@@ -140,6 +140,7 @@
                   "environment": "[parameters('environment')]"
       },
       "dependsOn": [
+        "[concat(parameters('namespace'), 'webSet')]",
         "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic')))]"
       ],
       "properties": {
